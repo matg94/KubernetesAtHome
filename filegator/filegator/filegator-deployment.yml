@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filegator-deployment
+  namespace: filegator
+  labels:
+    name: filegator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: filegator
+  template:
+    metadata:
+      labels:
+        name: filegator
+    spec:
+      containers:
+      - name: filegator
+        image: filegator/filegator
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        volumeMounts:
+        - name: filegator-volume
+          mountPath: "/var/www/filegator/repository"
+        - name: filegator-config
+          mountPath: "/var/www/filegator/private"
+      volumes:
+      - name: filegator-volume
+        persistentVolumeClaim:
+          claimName: filegator-volume-claim
+      - name: filegator-config
+        persistentVolumeClaim:
+          claimName: filegator-config-claim

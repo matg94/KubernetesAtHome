@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex-deployment
+  namespace: plex
+  labels:
+    name: plex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: plex
+  template:
+    metadata:
+      labels:
+        name: plex
+    spec:
+      nodeSelector: 
+        kubernetes.io/arch: amd64
+      containers:
+      - name: plex
+        image: lscr.io/linuxserver/plex:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 32400
+        volumeMounts:
+        - name: plex-config-volume
+          mountPath: "/config"
+        - name: plex-tv-volume
+          mountPath: "/tv"
+        - name: plex-movie-volume
+          mountPath: "/movies"
+      volumes:
+      - name: plex-config-volume
+        persistentVolumeClaim:
+          claimName: plex-config-claim
+      - name: plex-tv-volume
+        persistentVolumeClaim:
+          claimName: plex-tv-claim
+      - name: plex-movie-volume
+        persistentVolumeClaim:
+          claimName: plex-movie-claim

@@ -1,0 +1,32 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nfs-server
+  namespace: filegator
+  labels:
+    role: nfs-server
+spec:
+  containers:
+  - name: nfs-server-container
+    image: itsthenetwork/nfs-server-alpine:latest
+    env: 
+    - name: SHARED_DIRECTORY
+      value: '/shared'
+    ports:
+    - name: nfs
+      containerPort: 2049
+    - name: mountd
+      containerPort: 20048
+    - name: rpcbind
+      containerPort: 111
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: filegator-nfs-volume
+      mountPath: /shared
+  volumes:
+  - name: filegator-nfs-volume
+    persistentVolumeClaim:
+      claimName: filegator-nfs-pvc
+  nodeSelector:
+    kubernetes.io/arch: amd64

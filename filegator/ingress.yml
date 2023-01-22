@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: filegator-ingress
+  namespace: filegator
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`filegator.cluster.local`)
+    services:
+    - name: filegator
+      namespace: filegator
+      port: 8081

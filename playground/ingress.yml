@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: playground-ingress
+  namespace: playground
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`mongodb.cluster.local`)
+    services:
+    - name: mongodb
+      namespace: playground
+      port: 27017

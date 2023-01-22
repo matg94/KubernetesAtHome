@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-ddns-client-deployment
+  namespace: utilities
+  labels:
+    name: simple-ddns-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: simple-ddns-client
+  template:
+    metadata:
+      labels:
+        name: simple-ddns-client
+    spec:  
+      nodeSelector: 
+        kubernetes.io/arch: arm64
+      imagePullSecrets:
+      - name: registry-mg-docker-registry
+      containers:
+      - name: simple-ddns-client
+        image: registry.digitalocean.com/mg-docker-registry/simple-ddns-client:arm64
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: simple-ddns-configmap
+        - secretRef:
+            name: google-ddns-secret

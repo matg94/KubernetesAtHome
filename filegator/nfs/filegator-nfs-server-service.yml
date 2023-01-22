@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: filegator
+  name: filegator-nfs-service
+spec:
+  type: ClusterIP
+  clusterIP: 10.43.0.20
+  selector:
+    role: nfs-server
+  ports:
+    - name: nfs
+      port: 2049
+    - name: rpcbind
+      port: 111
+    - name: mountd
+      port: 20048

@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dvr-ingress
+  namespace: dvr
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`security.cluster.local`)
+    services:
+    - name: dvr
+      namespace: dvr
+      port: 8090

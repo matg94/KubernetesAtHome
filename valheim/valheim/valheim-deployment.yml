@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valheim-deployment
+  namespace: valheim
+  labels:
+    name: valheim
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: valheim
+  template:
+    metadata:
+      labels:
+        name: valheim
+    spec:
+      nodeSelector: 
+        kubernetes.io/arch: amd64
+      containers:
+      - name: valheim
+        image: lloesche/valheim-server
+        imagePullPolicy: Always
+        env:
+        - name: SERVER_NAME
+          value: ValHelm
+        - name: WORLD_NAME
+          value: Kuberheim
+        - name: SERVER_PORT
+          value: "2456"
+        - name: SERVER_PUBLIC
+          value: "true"
+        envFrom:
+        - secretRef:
+            name: valheim-password-secret
+        ports:
+        - containerPort: 2456
+        - containerPort: 2457
+        volumeMounts:
+        - name: valheim-config-volume
+          mountPath: "/config"
+        - name: valheim-data-volume
+          mountPath: "/opt/valheim"
+      volumes:
+      - name: valheim-config-volume
+        persistentVolumeClaim:
+          claimName: valheim-config-claim
+      - name: valheim-data-volume
+        persistentVolumeClaim:
+          claimName: valheim-data-claim

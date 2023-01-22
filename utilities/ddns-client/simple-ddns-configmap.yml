@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-ddns-configmap
+  namespace: utilities
+data:
+  GOOGLE_DDNS_DOMAIN_NAME_VALHEIM: valheim.matgautron.dev
+  GOOGLE_DDNS_INTERVAL_VALHEIM: "360"
+  GOOGLE_DDNS_DOMAIN_NAME_OPENVPN: openvpn.matgautron.dev
+  GOOGLE_DDNS_INTERVAL_OPENVPN: "360"

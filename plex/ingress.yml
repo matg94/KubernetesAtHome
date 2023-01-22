@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: plex-ingress
+  namespace: plex
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`plex.cluster.local`)
+    services:
+    - name: plex
+      port: 8083

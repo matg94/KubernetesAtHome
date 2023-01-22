@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: dvr-config-volume
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.43.0.20
+    path: "/agent-config"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: dvr-commands-volume
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.43.0.20
+    path: "/agent-commands"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: dvr
+  name: dvr-config-volume-claim
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: dvr
+  name: dvr-commands-volume-claim
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi

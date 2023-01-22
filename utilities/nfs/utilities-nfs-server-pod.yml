@@ -1,0 +1,32 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nfs-server
+  namespace: utilities
+  labels:
+    role: nfs-server
+spec:
+  containers:
+  - name: nfs-server-container
+    image: itsthenetwork/nfs-server-alpine:latest
+    env: 
+    - name: SHARED_DIRECTORY
+      value: '/shared'
+    ports:
+    - name: nfs
+      containerPort: 2049
+    - name: mountd
+      containerPort: 20048
+    - name: rpcbind
+      containerPort: 111
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: utilities-nfs-volume
+      mountPath: /shared
+  volumes:
+  - name: utilities-nfs-volume
+    persistentVolumeClaim:
+      claimName: utilities-nfs-pvc
+  nodeSelector:
+    kubernetes.io/arch: amd64
