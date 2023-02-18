@@ -8,5 +8,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.43.0.21
+    server: 10.43.0.21 # Shared with Plex
     path: "/qbit-config"

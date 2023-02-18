@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: notification-service
+  name: notification-service-nfs-service
+spec:
+  type: ClusterIP
+  clusterIP: 10.43.0.32
+  selector:
+    role: notification-service-nfs-server
+  ports:
+    - name: nfs
+      port: 2049
+    - name: rpcbind
+      port: 111
+    - name: mountd
+      port: 20048

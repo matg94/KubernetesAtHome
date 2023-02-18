@@ -8,5 +8,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.43.0.20
+    server: 10.43.0.20 # Sharing with filegator
     path: "/repository/Security"
