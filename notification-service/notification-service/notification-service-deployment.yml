@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-deployment
+  namespace: notification-service
+spec:
+  replicas: 1 # Need to fix double sending notifications
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      imagePullSecrets:
+        - name: digitalocean-registry-auth
+      containers:
+        - name: notification-service-container
+          image: registry.digitalocean.com/mg-docker-registry/notification-service:amd64
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: notification-service-secrets
+            - configMapRef:
+                name: notification-service-configmap
