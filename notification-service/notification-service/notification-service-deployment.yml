@@ -24,6 +24,6 @@ spec:
             - containerPort: 8080
           envFrom:
             - secretRef:
-                name: notification-service-secrets
+                name: notification-service-secret
             - configMapRef:
                 name: notification-service-configmap
