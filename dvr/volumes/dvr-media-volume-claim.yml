@@ -4,7 +4,7 @@ metadata:
   namespace: dvr
   name: dvr-media-volume-claim
 spec:
-  storageClassName: ""
+  storageClassName: nfs-media
   accessModes:
     - ReadWriteMany
   resources:

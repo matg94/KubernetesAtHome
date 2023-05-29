@@ -4,8 +4,6 @@ metadata:
   name: homeassistant
   namespace: homeassistant
 spec:
-  entryPoints:
-  - web
   routes:
   - match: Host(`homeassistant.cluster.local`)
     kind: Rule

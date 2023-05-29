@@ -4,7 +4,7 @@ metadata:
   namespace: homeassistant
   name: homeassistant-pvc
 spec:
-  storageClassName: ""
+  storageClassName: longhorn-fast
   accessModes:
     - ReadWriteMany
   resources:
