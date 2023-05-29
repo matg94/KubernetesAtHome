@@ -23,3 +23,16 @@ spec:
   resources:
     requests:
       storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: dvr
+  name: dvr-media-volume-claim
+spec:
+  storageClassName: nfs-media
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 190Gi
