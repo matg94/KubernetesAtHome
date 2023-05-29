@@ -4,7 +4,7 @@ metadata:
   namespace: qbittorrent
   name: qbittorrent-config-claim
 spec:
-  storageClassName: ""
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
   resources:

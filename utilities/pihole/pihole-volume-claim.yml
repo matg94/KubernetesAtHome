@@ -4,9 +4,9 @@ metadata:
   namespace: utilities
   name: pihole-volume-claim
 spec:
-  storageClassName: ""
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 500Mi
+      storage: 2Gi

@@ -1,10 +1,10 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: nfs-server
-  namespace: utilities
+  name: nas-media-server
+  namespace: nas
   labels:
-    role: nfs-server
+    role: nas-media-server
 spec:
   containers:
   - name: nfs-server-container
@@ -22,11 +22,11 @@ spec:
     securityContext:
       privileged: true
     volumeMounts:
-    - name: utilities-nfs-volume
+    - name: nas-media-volume
       mountPath: /shared
   volumes:
-  - name: utilities-nfs-volume
+  - name: nas-media-volume
     persistentVolumeClaim:
-      claimName: utilities-nfs-pvc
+      claimName: nas-media-pvc
   nodeSelector:
     kubernetes.io/arch: amd64

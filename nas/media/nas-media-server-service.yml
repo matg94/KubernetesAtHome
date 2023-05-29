@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  namespace: utilities
-  name: utilities-nfs-service
+  namespace: nas
+  name: nas-media-service
 spec:
   type: ClusterIP
-  clusterIP: 10.43.0.30
+  clusterIP: 10.43.0.44
   selector:
-    role: nfs-server
+    role: nas-media-server
   ports:
     - name: nfs
       port: 2049

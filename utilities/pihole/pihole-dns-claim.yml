@@ -4,9 +4,9 @@ metadata:
   namespace: utilities
   name: pihole-pvc-dns
 spec:
-  storageClassName: ""
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 2Gi

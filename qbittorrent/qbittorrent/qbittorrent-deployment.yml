@@ -6,7 +6,7 @@ metadata:
   labels:
     name: qbittorrent
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       name: qbittorrent

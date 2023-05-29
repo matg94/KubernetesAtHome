@@ -4,9 +4,9 @@ metadata:
   name: dvr-media-volume
 spec:
   capacity:
-    storage: 1Ti
+    storage: 200Gi
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.43.0.20 # Sharing with filegator
-    path: "/repository/Security"
+    server: 10.43.0.44 
+    path: "/security"
