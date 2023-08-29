@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nginx-test
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-pod-ssd
+  namespace: nginx-test
+spec:
+  containers:
+    - name: app-container
+      image: nginx:latest
+      volumeMounts:
+        - name: nfs-volume
+          mountPath: /nginx-test
+  volumes:
+    - name: nfs-volume
+      nfs:
+        server: 10.43.0.30
+        path: /nginx-test
+        readOnly: no
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-pod-hdd
+  namespace: nginx-test
+spec:
+  containers:
+    - name: app-container
+      image: nginx:latest
+      volumeMounts:
+        - name: nfs-volume
+          mountPath: /nginx-test
+  volumes:
+    - name: nfs-volume
+      nfs:
+        server: 10.43.0.31
+        path: /nginx-test
+        readOnly: no

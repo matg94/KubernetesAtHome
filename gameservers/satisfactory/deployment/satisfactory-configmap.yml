@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: satisfactory-config
+  namespace: satisfactory
+data:
+  SERVERIP: "test"

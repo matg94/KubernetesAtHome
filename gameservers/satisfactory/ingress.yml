@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: satisfactory-ingress
+  namespace: satisfactory
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`satisfactory.cluster.local`)
+      services:
+        - name: satisfactory
+          port: 7777
+        - name: satisfactory
+          port: 15000
+        - name: satisfactory
+          port: 15777

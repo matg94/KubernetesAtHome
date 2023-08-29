@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overseerr-deployment
+  namespace: media
+  labels:
+    app: overseerr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: overseerr
+  template:
+    metadata:
+      labels:
+        app: overseerr
+    spec:
+      containers:
+        - name: overseerr
+          env:
+            - name: TZ
+              value: Europe/London
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          image: linuxserver/overseerr
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5055
+          volumeMounts:
+            - name: overseerr-config-pv
+              mountPath: "/overseerr-config"
+      volumes:
+        - name: overseerr-config-pv
+          persistentVolumeClaim:
+            claimName: overseerr-config-pvc

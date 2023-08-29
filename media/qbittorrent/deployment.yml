@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent-deployment
+  namespace: media
+  labels:
+    name: qbittorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: qbittorrent
+  template:
+    metadata:
+      labels:
+        name: qbittorrent
+    spec:
+      containers:
+        - name: qbittorrent
+          image: dyonr/qbittorrentvpn
+          securityContext:
+            privileged: true
+          imagePullPolicy: Always
+          env:
+            - name: VPN_ENABLED
+              value: "yes"
+            - name: VPN_TYPE
+              value: "openvpn"
+            - name: LAN_NETWORK
+              value: 192.168.50.0/24
+            - name: INSTALL_PYTHON3
+              value: "yes"
+          envFrom:
+            - secretRef:
+                name: nordvpn-credentials
+          ports:
+            - containerPort: 8080
+            - containerPort: 8999
+          volumeMounts:
+            - name: qbittorrent-config-pv
+              mountPath: "/config"
+            - name: qbittorrent-download-pv
+              mountPath: "/downloads"
+      volumes:
+        - name: qbittorrent-config-pv
+          persistentVolumeClaim:
+            claimName: qbittorrent-config-pvc
+        - name: qbittorrent-download-pv
+          persistentVolumeClaim:
+            claimName: download-pvc

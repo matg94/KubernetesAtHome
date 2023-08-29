@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satisfactory-deployment
+  namespace: satisfactory
+  labels:
+    name: satisfactory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: satisfactory
+  template:
+    metadata:
+      labels:
+        name: satisfactory
+    spec:
+      containers:
+        - name: satisfactory
+          image: wolveix/satisfactory-server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: satisfactory-config
+          ports:
+            - containerPort: 7777
+            - containerPort: 15000
+            - containerPort: 15777
+          volumeMounts:
+            - name: satisfactory-config-volume
+              mountPath: "/config"
+      volumes:
+        - name: satisfactory-config-volume
+          persistentVolumeClaim:
+            claimName: satisfactory-config-claim

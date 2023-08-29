@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr-deployment
+  namespace: media
+  labels:
+    app: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+        - name: radarr
+          env:
+            - name: TZ
+              value: Europe/London
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          image: linuxserver/radarr
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8989
+          volumeMounts:
+            - name: radarr-config-pv
+              mountPath: "/radarr-config"
+            - name: radarr-download-pv
+              mountPath: "/downloads"
+            - name: radarr-movie-pv
+              mountPath: "/movie"
+      volumes:
+        - name: radarr-config-pv
+          persistentVolumeClaim:
+            claimName: radarr-config-pvc
+        - name: radarr-download-pv
+          persistentVolumeClaim:
+            claimName: download-pvc
+        - name: radarr-movie-pv
+          persistentVolumeClaim:
+            claimName: movie-pvc

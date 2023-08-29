@@ -1,0 +1,77 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: ssd-nfs-server
+  namespace: storage
+  labels:
+    role: ssd-nfs-server
+spec:
+  containers:
+    - name: nfs-server-container
+      image: itsthenetwork/nfs-server-alpine:latest
+      env:
+        - name: SHARED_DIRECTORY
+          value: '/shared'
+      ports:
+        - name: nfs
+          containerPort: 2049
+        - name: mountd
+          containerPort: 20048
+        - name: rpcbind
+          containerPort: 111
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - name: ssd-nfs-pv
+          mountPath: /shared
+  volumes:
+    - name: ssd-nfs-pv
+      persistentVolumeClaim:
+        claimName: ssd-nfs-pvc
+  nodeSelector:
+    kubernetes.io/arch: amd64
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: storage
+  name: ssd-nfs-service
+spec:
+  type: ClusterIP
+  clusterIP: 10.43.0.30
+  selector:
+    role: ssd-nfs-server
+  ports:
+    - name: nfs
+      port: 2049
+    - name: rpcbind
+      port: 111
+    - name: mountd
+      port: 20048
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ssd-nfs-pv
+spec:
+  storageClassName: "local-storage"
+  capacity:
+    storage: 800Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/internal/nfs"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: storage
+  name: ssd-nfs-pvc
+spec:
+  storageClassName: "local-storage"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 800Gi

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr-deployment
+  namespace: media
+  labels:
+    app: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        - name: sonarr
+          env:
+            - name: TZ
+              value: Europe/London
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          image: linuxserver/sonarr
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8989
+          volumeMounts:
+            - name: sonarr-config-pv
+              mountPath: "/sonarr-config"
+            - name: sonarr-download-pv
+              mountPath: "/downloads"
+            - name: sonarr-tv-pv
+              mountPath: "/tv"
+      volumes:
+        - name: sonarr-config-pv
+          persistentVolumeClaim:
+            claimName: sonarr-config-pvc
+        - name: sonarr-download-pv
+          persistentVolumeClaim:
+            claimName: download-pvc
+        - name: sonarr-tv-pv
+          persistentVolumeClaim:
+            claimName: tv-pvc

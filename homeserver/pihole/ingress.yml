@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pihole-ingress
+  namespace: pihole
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`pi.cluster.local`)
+      services:
+        - name: pihole
+          namespace: pihole
+          port: 8080

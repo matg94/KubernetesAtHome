@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd-storage
+provisioner: ssd-nfs-provisioner
+parameters:
+  pathPattern: "ssd-${.PVC.namespace}-${.PVC.name}"
+  onDelete: retain

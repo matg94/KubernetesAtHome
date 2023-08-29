@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hdd-nfs-provisioner
+  labels:
+    app: hdd-nfs-provisioner
+  namespace: storage
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: hdd-nfs-provisioner
+  template:
+    metadata:
+      labels:
+        app: hdd-nfs-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          image: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: hdd-nfs-provisioner
+            - name: NFS_SERVER
+              value: 10.43.0.31
+            - name: NFS_PATH
+              value: /volumes
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 10.43.0.31
+            path: /volumes

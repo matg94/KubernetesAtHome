@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dvr-deployment
+  namespace: dvr
+  labels:
+    name: dvr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: dvr
+  template:
+    metadata:
+      labels:
+        name: dvr
+    spec:
+      containers:
+      - name: dvr
+        image: doitandbedone/ispyagentdvr:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8090
+        - containerPort: 3478
+        - containerPort: 50000
+        - containerPort: 50001
+        - containerPort: 50002
+        - containerPort: 50003
+        - containerPort: 50004
+        - containerPort: 50005
+        - containerPort: 50006
+        - containerPort: 50007
+        - containerPort: 50008
+        - containerPort: 50009
+        - containerPort: 50010
+        volumeMounts:
+        - name: config-pv
+          mountPath: "/agent/Media/XML/"
+        - name: commands-pv
+          mountPath: "/agent/Commands"
+        - name: media-pv
+          mountPath: "/agent/Media/WebServerRoot/Media/"
+      volumes:
+      - name: config-pv
+        persistentVolumeClaim:
+          claimName: config-pvc
+      - name: commands-pv
+        persistentVolumeClaim:
+          claimName: commands-pvc
+      - name: media-pv
+        persistentVolumeClaim:
+          claimName: media-pvc

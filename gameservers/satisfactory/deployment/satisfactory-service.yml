@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: satisfactory
+  namespace: satisfactory
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 7777
+      name: standard
+      protocol: UDP
+      targetPort: 7777
+    - port: 15000
+      name: otherone
+      protocol: UDP
+      targetPort: 15000
+    - port: 15777
+      name: query
+      protocol: UDP
+      targetPort: 15777
+  selector:
+    name: satisfactory

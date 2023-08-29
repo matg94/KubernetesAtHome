@@ -1,0 +1,45 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: media-ingress
+  namespace: media
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`plex.cluster.local`)
+    services:
+    - name: plex
+      port: 8091
+  - kind: Rule
+    match: Host(`sonarr.cluster.local`)
+    services:
+    - name: sonarr
+      port: 8092
+  - kind: Rule
+    match: Host(`radarr.cluster.local`)
+    services:
+      - name: radarr
+        port: 8093
+  - kind: Rule
+    match: Host(`prowlarr.cluster.local`)
+    services:
+    - name: prowlarr
+      port: 8094
+  - kind: Rule
+    match: Host(`qbit.cluster.local`)
+    services:
+    - name: qbittorrent
+      port: 8095
+  - kind: Rule
+    match: Host(`ombi.cluster.local`)
+    services:
+      - name: ombi
+        port: 8096
+  - kind: Rule
+    match: Host(`overseerr.cluster.local`)
+    services:
+      - name: overseerr
+        port: 8097
