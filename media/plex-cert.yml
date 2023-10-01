@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: plex-cert
+  namespace: media
+spec:
+  secretName: plex-matgautron-dev-cert-key
+  dnsNames:
+    - plex.matgautron.dev
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: synapse-deployment
+  namespace: matrix
+  labels:
+    app: synapse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: synapse
+  template:
+    metadata:
+      labels:
+        app: synapse
+    spec:
+      containers:
+        - name: synapse
+#          args: ["generate"]
+#          env:
+#            - name: SYNAPSE_SERVER_NAME
+#              value: "matrix.matgautron.dev"
+#            - name: SYNAPSE_REPORT_STATS
+#              value: "yes"
+          image: matrixdotorg/synapse
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8008
+          volumeMounts:
+            - name: synapse-data-pv
+              mountPath: "/data"
+      volumes:
+        - name: synapse-data-pv
+          persistentVolumeClaim:
+            claimName: synapse-data-pvc

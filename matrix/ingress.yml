@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: matrix-ingress
+  namespace: matrix
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`matrix.matgautron.dev`)
+      services:
+        - name: synapse
+          port: 8100
+  tls:
+    secretName: matrix-matgautron-dev-cert-key

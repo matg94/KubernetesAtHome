@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: media-tls-ingress
+  namespace: media
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`plex.matgautron.dev`)
+      services:
+        - name: plex
+          port: 8091
+  tls:
+    secretName: plex-matgautron-dev-cert-key
