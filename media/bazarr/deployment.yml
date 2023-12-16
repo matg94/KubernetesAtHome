@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sonarr-deployment
+  name: bazarr-deployment
   namespace: media
   labels:
-    app: sonarr
+    app: bazarr
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sonarr
+      app: bazarr
   template:
     metadata:
       labels:
-        app: sonarr
+        app: bazarr
     spec:
       containers:
-        - name: sonarr
+        - name: bazarr
           env:
             - name: TZ
               value: Europe/London
@@ -24,24 +24,24 @@ spec:
               value: "1000"
             - name: PGID
               value: "1000"
-          image: linuxserver/sonarr
+          image: lscr.io/linuxserver/bazarr:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8989
+            - containerPort: 6767
           volumeMounts:
-            - name: sonarr-config-pv
+            - name: bazarr-config-pv
               mountPath: "/config"
-            - name: sonarr-download-pv
-              mountPath: "/downloads"
-            - name: sonarr-tv-pv
+            - name: bazarr-tv-pv
               mountPath: "/tv"
+            - name: bazarr-movie-pv
+              mountPath: "/movies"
       volumes:
-        - name: sonarr-config-pv
+        - name: bazarr-config-pv
           persistentVolumeClaim:
-            claimName: sonarr-config-pvc
-        - name: sonarr-download-pv
-          persistentVolumeClaim:
-            claimName: download-pvc
-        - name: sonarr-tv-pv
+            claimName: bazarr-config-pvc
+        - name: bazarr-tv-pv
           persistentVolumeClaim:
             claimName: tv-pvc
+        - name: bazarr-movie-pv
+          persistentVolumeClaim:
+            claimName: movie-pvc

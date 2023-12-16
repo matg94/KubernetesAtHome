@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: piwigo
+  namespace: piwigo
+spec:
+  routes:
+    - match: Host(`photos.cluster.local`)
+      kind: Rule
+      services:
+        - name: piwigo
+          port: 8095

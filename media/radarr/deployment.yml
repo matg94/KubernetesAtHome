@@ -30,11 +30,11 @@ spec:
             - containerPort: 8989
           volumeMounts:
             - name: radarr-config-pv
-              mountPath: "/radarr-config"
+              mountPath: "/config"
             - name: radarr-download-pv
               mountPath: "/downloads"
             - name: radarr-movie-pv
-              mountPath: "/movie"
+              mountPath: "/movies"
       volumes:
         - name: radarr-config-pv
           persistentVolumeClaim:

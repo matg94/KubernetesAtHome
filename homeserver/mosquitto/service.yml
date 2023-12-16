@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+  namespace: mosquitto
+spec:
+  type: LoadBalancer
+  selector:
+    app: mosquitto
+  ports:
+    - name: main-port
+      protocol: TCP
+      port: 8122
+      targetPort: 1883
+    - name: second-port
+      protocol: TCP
+      port: 8120
+      targetPort: 9001

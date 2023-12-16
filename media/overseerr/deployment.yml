@@ -30,7 +30,7 @@ spec:
             - containerPort: 5055
           volumeMounts:
             - name: overseerr-config-pv
-              mountPath: "/overseerr-config"
+              mountPath: "/config"
       volumes:
         - name: overseerr-config-pv
           persistentVolumeClaim:

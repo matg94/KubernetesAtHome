@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin-deployment
+  namespace: media
+  labels:
+    app: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: jellyfin
+          image: jellyfin/jellyfin:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8096
+          volumeMounts:
+            - name: jellyfin-config-pv
+              mountPath: "/config"
+            - name: jellyfin-cache-pv
+              mountPath: "/cache"
+            - name: jellyfin-tv-pv
+              mountPath: "/tv"
+            - name: jellyfin-movie-pv
+              mountPath: "/movies"
+      volumes:
+        - name: jellyfin-config-pv
+          persistentVolumeClaim:
+            claimName: jellyfin-config-pvc
+        - name: jellyfin-cache-pv
+          persistentVolumeClaim:
+            claimName: jellyfin-cache-pvc
+        - name: jellyfin-tv-pv
+          persistentVolumeClaim:
+            claimName: tv-pvc
+        - name: jellyfin-movie-pv
+          persistentVolumeClaim:
+            claimName: movie-pvc

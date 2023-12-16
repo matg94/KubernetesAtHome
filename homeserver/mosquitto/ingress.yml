@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mosquitto
+  namespace: mosquitto
+spec:
+  routes:
+    - match: Host(`mqtt.cluster.local`)
+      kind: Rule
+      services:
+        - name: mosquitto
+          port: 8122

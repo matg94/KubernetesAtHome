@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prowlarr-deployment
+  name: piwigo-deployment
   namespace: media
   labels:
-    app: prowlarr
+    app: piwigo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prowlarr
+      app: piwigo
   template:
     metadata:
       labels:
-        app: prowlarr
+        app: piwigo
     spec:
       containers:
-        - name: prowlarr
+        - name: piwigo
           env:
             - name: TZ
               value: Europe/London
@@ -24,14 +24,19 @@ spec:
               value: "1000"
             - name: PGID
               value: "1000"
-          image: linuxserver/prowlarr
+          image: lscr.io/linuxserver/piwigo:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 9696
+            - containerPort: 80
           volumeMounts:
-            - name: prowlarr-config-pv
+            - name: piwigo-config-pv
               mountPath: "/config"
+            - name: piwigo-gallery-pv
+              mountPath: "/gallery"
       volumes:
-        - name: prowlarr-config-pv
+        - name: piwigo-config-pv
           persistentVolumeClaim:
-            claimName: prowlarr-config-pvc
+            claimName: piwigo-config-pvc
+        - name: piwigo-gallery-pv
+          persistentVolumeClaim:
+            claimName: piwigo-gallery-pvc

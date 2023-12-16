@@ -42,3 +42,13 @@ spec:
     services:
       - name: overseerr
         port: 8097
+  - kind: Rule
+    match: Host(`jellyfin.cluster.local`)
+    services:
+      - name: jellyfin
+        port: 8098
+  - kind: Rule
+    match: Host(`bazarr.cluster.local`)
+    services:
+      - name: bazarr
+        port: 8099
