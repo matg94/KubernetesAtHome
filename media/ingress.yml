@@ -51,4 +51,4 @@ spec:
     match: Host(`bazarr.cluster.local`)
     services:
       - name: bazarr
-        port: 8099
+        port: 8091
