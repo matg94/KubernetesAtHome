@@ -22,7 +22,7 @@ spec:
           image: jellyfin/jellyfin:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8096
+            - containerPort: 8098
           volumeMounts:
             - name: jellyfin-config-pv
               mountPath: "/config"

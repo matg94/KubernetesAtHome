@@ -8,6 +8,6 @@ spec:
   clusterIP: 10.43.73.209
   ports:
     - port: 8093
-      targetPort: 7878
+      targetPort: 8093
   selector:
     app: radarr

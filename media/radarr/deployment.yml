@@ -27,7 +27,7 @@ spec:
           image: linuxserver/radarr
           imagePullPolicy: Always
           ports:
-            - containerPort: 8989
+            - containerPort: 8093 
           volumeMounts:
             - name: radarr-config-pv
               mountPath: "/config"

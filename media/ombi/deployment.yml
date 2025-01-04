@@ -30,7 +30,7 @@ spec:
             - containerPort: 3579
           volumeMounts:
             - name: ombi-config-pv
-              mountPath: "/ombi-config"
+              mountPath: "/config"
       volumes:
         - name: ombi-config-pv
           persistentVolumeClaim:

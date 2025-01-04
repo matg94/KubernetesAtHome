@@ -10,5 +10,5 @@ spec:
   ports:
     - name: main-port
       protocol: TCP
-      port: 8095
+      port: 9095
       targetPort: 80

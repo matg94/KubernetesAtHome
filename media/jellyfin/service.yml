@@ -9,6 +9,6 @@ spec:
   ports:
     - port: 8098
       name: http
-      targetPort: 8096
+      targetPort: 8098
   selector:
     app: jellyfin
