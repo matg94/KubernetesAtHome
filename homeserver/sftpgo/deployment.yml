@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sftpgo
+  namespace: sftpgo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sftpgo
+  template:
+    metadata:
+      labels:
+        app: sftpgo
+    spec:
+      containers:
+        - name: sftpgo
+          image: drakkan/sftpgo:latest
+          ports:
+            - containerPort: 8097
+              name: web
+            - containerPort: 2022
+              name: sftp
+            - containerPort: 21
+              name: ftp
+            - containerPort: 2121
+              name: ftp-passive-1
+            - containerPort: 2122
+              name: ftp-passive-2
+            - containerPort: 2123
+              name: ftp-passive-3
+            - containerPort: 2124
+              name: ftp-passive-4
+            - containerPort: 2125
+              name: ftp-passive-5
+            - containerPort: 2126
+              name: ftp-passive-6
+            - containerPort: 2127
+              name: ftp-passive-7
+            - containerPort: 2128
+              name: ftp-passive-8
+            - containerPort: 2129
+              name: ftp-passive-9
+            - containerPort: 2130
+              name: ftp-passive-10
+          env:
+            - name: SFTPGO_HTTPD__BINDINGS__0__ADDRESS
+              value: "0.0.0.0"
+            - name: SFTPGO_HTTPD__BINDINGS__0__PORT
+              value: "8097"
+            - name: SFTPGO_SFTPD__BINDINGS__0__ADDRESS
+              value: "0.0.0.0"
+            - name: SFTPGO_SFTPD__BINDINGS__0__PORT
+              value: "2022"
+            - name: SFTPGO_FTPD__BINDINGS__0__ADDRESS
+              value: "0.0.0.0"
+            - name: SFTPGO_FTPD__BINDINGS__0__PORT
+              value: "21"
+            - name: SFTPGO_FTPD__PASSIVE_PORT_RANGE__START
+              value: "2121"
+            - name: SFTPGO_FTPD__PASSIVE_PORT_RANGE__END
+              value: "2130"
+            - name: SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP
+              value: "192.168.50.154"
+            - name: SFTPGO_FTPD__BINDINGS__0__PASSIVE_HOST
+              value: "192.168.50.154"
+            - name: SFTPGO_FTPD__BINDINGS__0__PASSIVE_CONNECTIONS_SECURITY
+              value: "0"
+            - name: SFTPGO_FTPD__BINDINGS__0__ACTIVE_CONNECTIONS_SECURITY
+              value: "0"
+          volumeMounts:
+            - name: sftpgo-data
+              mountPath: /srv/sftpgo/data
+            - name: sftpgo-config
+              mountPath: /var/lib/sftpgo
+      volumes:
+        - name: sftpgo-data
+          persistentVolumeClaim:
+            claimName: sftpgo-data-pvc
+        - name: sftpgo-config
+          persistentVolumeClaim:
+            claimName: sftpgo-config-pvc

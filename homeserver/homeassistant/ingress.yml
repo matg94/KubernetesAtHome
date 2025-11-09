@@ -10,3 +10,8 @@ spec:
     services:
     - name: homeassistant
       port: 8123
+  - match: Host(`homeassistant.cluster.tail`)
+    kind: Rule
+    services:
+    - name: homeassistant
+      port: 8123

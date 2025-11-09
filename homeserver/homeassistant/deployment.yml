@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: homeassistant
-          image: homeassistant/home-assistant:2023.10
+          image: homeassistant/home-assistant:2025.1
           volumeMounts:
             - name: homeassistant-config
               mountPath: /config

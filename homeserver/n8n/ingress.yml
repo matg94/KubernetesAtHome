@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  routes:
+  - match: Host(`n8n.cluster.local`)
+    kind: Rule
+    services:
+    - name: n8n
+      port: 5678
+  - match: Host(`n8n.cluster.tail`)
+    kind: Rule
+    services:
+    - name: n8n
+      port: 5678

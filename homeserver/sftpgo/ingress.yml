@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sftpgo
+  namespace: sftpgo
+spec:
+  routes:
+  - match: Host(`sftpgo.cluster.local`)
+    kind: Rule
+    services:
+    - name: sftpgo-web
+      port: 8097
+  - match: Host(`sftpgo.cluster.tail`)
+    kind: Rule
+    services:
+    - name: sftpgo-web
+      port: 8097
