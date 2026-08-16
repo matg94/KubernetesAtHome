@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fitcoach-config
+  namespace: fitcoach
+  labels:
+    app: fitcoach
+data:
+  DATABASE_URL: "postgresql://fitcoach:fitcoach-staging@fitcoach-postgres:5432/fitcoach"
+  OPENROUTER_MODEL: "openrouter/free"

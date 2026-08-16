@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fitcoach-postgres-config
+  namespace: fitcoach
+  labels:
+    app: fitcoach-postgres
+data:
+  POSTGRES_DB: fitcoach
+  POSTGRES_USER: fitcoach
+  POSTGRES_PASSWORD: fitcoach-staging

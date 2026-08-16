@@ -5,6 +5,11 @@ metadata:
   namespace: homeassistant
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
   selector:
     app: homeassistant
   ports:

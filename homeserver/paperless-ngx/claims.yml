@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-data-pvc
+  namespace: paperless-ngx
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ssd-storage
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-media-pvc
+  namespace: paperless-ngx
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hdd-storage
+  resources:
+    requests:
+      storage: 100Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-consume-pvc
+  namespace: paperless-ngx
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ssd-storage
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-export-pvc
+  namespace: paperless-ngx
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hdd-storage
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-pvc
+  namespace: paperless-ngx
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ssd-storage
+  resources:
+    requests:
+      storage: 1Gi

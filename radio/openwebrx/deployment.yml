@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openwebrx-deployment
+  namespace: radio
+  labels:
+    app: openwebrx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openwebrx
+  template:
+    metadata:
+      labels:
+        app: openwebrx
+    spec:
+      containers:
+        - name: openwebrx
+          image: jketterl/openwebrx:stable
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8073
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: openwebrx-config-pv
+              mountPath: "/var/lib/openwebrx"
+            - name: usb
+              mountPath: "/dev/bus/usb"
+      volumes:
+        - name: openwebrx-config-pv
+          persistentVolumeClaim:
+            claimName: openwebrx-config-pvc
+        - name: usb
+          hostPath:
+            path: /dev/bus/usb

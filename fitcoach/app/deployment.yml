@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fitcoach-deployment
+  namespace: fitcoach
+  labels:
+    app: fitcoach
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fitcoach
+  template:
+    metadata:
+      labels:
+        app: fitcoach
+    spec:
+      imagePullSecrets:
+        - name: registry-mg-docker-registry
+      containers:
+        - name: fitcoach
+          image: registry.digitalocean.com/mg-docker-registry/fitcoach:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: fitcoach-config
+            - secretRef:
+                name: fitcoach-secrets

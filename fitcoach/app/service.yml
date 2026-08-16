@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fitcoach
+  namespace: fitcoach
+spec:
+  type: LoadBalancer
+  selector:
+    app: fitcoach
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8099
+      targetPort: 8080

@@ -1,0 +1,29 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: paperless-ngx
+  namespace: paperless-ngx
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`paperless.cluster.local`)
+    kind: Rule
+    services:
+    - name: paperless-ngx
+      port: 8000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: paperless-ngx-tail
+  namespace: paperless-ngx
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`paperless.cluster.tail`)
+    kind: Rule
+    services:
+    - name: paperless-ngx
+      port: 8000
